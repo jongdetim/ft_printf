@@ -12,6 +12,11 @@ typedef struct 	s_data
 	int		precision;
 	int		width;
 	char	*format;
+	char	type;
+	int		ret;
+	int		i;
+	int		zero;
+	int		dot;
 }				t_data;
 
 t_data	*init_data(const char * restrict format)
@@ -38,6 +43,10 @@ void	set_argnum(t_data *data, int d)
 	}
 }
 
+// deals with 0 flag, width, argnum and .precision
+
+// moet gesplitst worden in 2 functies
+
 void    save_int(t_data *data)
 {
 	int i;
@@ -47,6 +56,11 @@ void    save_int(t_data *data)
 
 	i = 0;
 	j = 0;
+	if (data->format[0] == '0' && data->dot == 0)
+	{
+		data->zero = 1;
+		data->format++;
+	}
 	while (data->format[i] >= '0' && data->format[i] <= '9')
 		i++;
 	s = (char *)malloc(sizeof(char) * (i + 1));
@@ -63,10 +77,11 @@ void    save_int(t_data *data)
 		set_argnum(data, d);
 		data->format++;
 	}
-	else if (data->precision == -1)
+	else if (data->found_dot == 1)
 		data->precision = d;
 	else
 		data->width = d;
+	free(s);
 }
 
 int     ft_printf(const char * restrict format, ...)
@@ -76,28 +91,7 @@ int     ft_printf(const char * restrict format, ...)
 	data = init_data(format);
 	va_start(data->args, format);
 	va_copy(data->backup, data->args);
-    while (*(data->format))
-    {
-        if (*(data->format) == '%')
-        {
-            data->format++;
-            if (*(data->format) == '%')
-                write(1, "%%", 1);
-            if (*(data->format) >= '0' && *(data->format) <= '9')
-			{
-				save_int(data);
-			}
-            if (*(data->format) == 's')
-            {
-				write(1, va_arg(data->args, char*), 1);
-            }
-        }
-        else
-        {
-            write(1, (data->format), 1);
-        }
-        data->format++;
-    }
+	parser(data);
     return (0);
 }
 
