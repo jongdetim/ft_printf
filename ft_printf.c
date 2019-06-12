@@ -21,6 +21,7 @@ typedef struct 	s_data
 	int		minus;
 	int		plus;
 	int		seperator;
+	char	length;
 }				t_data;
 
 
@@ -29,7 +30,6 @@ void	*init_data(t_data *data)
 	data->precision = 0;
 	data->width = 0;
 	data->type = '0';
-	data->ret = 0;
 	data->zero = 0;
 	data->dot = 0;
 	data->space = 0;
@@ -37,6 +37,7 @@ void	*init_data(t_data *data)
 	data->minus = 0;
 	data->plus = 0;
 	data->seperator = 0;
+	data->length = '0';
 }
 
 void	set_argnum(t_data *data, int d)
@@ -99,7 +100,7 @@ void    process_int(t_data *data)
 **	if the current character is a conversion type it is saved in data->type
 */
 
-int		get_conv(char c, t_data *data)
+int		get_conv(t_data *data)
 {
 	if (data->type == '0')
 	{
@@ -116,10 +117,29 @@ int		get_conv(char c, t_data *data)
 	}
 }
 
+/*
+**	'b' = long long; 'c' = character
+*/
+
+void	get_length(t_data *data)
+{
+	if (ft_strchr("lhL", *(data->format)) != NULL)
+	{
+		if (data->length == '0')
+		{
+			data->length = *(data->format);
+		}
+		else if (data->length == 'h')
+			data->length = 'c';
+		else if (data->length == 'l')
+			data->length = 'b';
+	}
+}
+
 void	parse_arg(t_data *data)
 {
 	data->format++;
-	while (*(data->format) != '\0' && get_conv(*(data->format), data) == 0)
+	while (*(data->format) != '\0' && get_conv(data) == 0)
 	{
 		if (*(data->format) == '.')
 			data->dot = 1;
@@ -139,6 +159,7 @@ void	parse_arg(t_data *data)
 			data->zero = 1;
 		if (*(data->format) >= '1' && *(data->format) <= '9')
 			process_int(data);
+		get_length(data);
 		data->format++;
 	}
 //	process_arg(t_data *data);
@@ -169,18 +190,19 @@ void	parser(t_data *data)
 
 void	parsing_test(t_data *data)
 {
-	printf("precision is %i\n", data->precision);
-	printf("width is %i\n", data->width);
+	printf("precision is       %i\n", data->precision);
+	printf("width is           %i\n", data->width);
 	printf("conversion type is %c\n", data->type);
-	printf("return value is %i\n", data->ret);
-	printf("zero flag is %i\n", data->zero);
-	printf("dot flag is %i\n", data->dot);
-	printf("space flag is %i\n", data->space);
-	printf("hash flag is %i\n", data->hash);
-	printf("minus flag is %i\n", data->minus);
-	printf("plus flag is %i\n", data->plus);
-	printf("seperator flag is %i\n", data->seperator);
-	printf("next argument is %s\n", va_arg(data->args, int));
+	printf("length is          %c\n", data->length);
+	printf("return value is    %i\n", data->ret);
+	printf("zero flag is       %i\n", data->zero);
+	printf("dot flag is        %i\n", data->dot);
+	printf("space flag is      %i\n", data->space);
+	printf("hash flag is       %i\n", data->hash);
+	printf("minus flag is      %i\n", data->minus);
+	printf("plus flag is       %i\n", data->plus);
+	printf("seperator flag is  %i\n", data->seperator);
+	printf("next argument is   %s\n", va_arg(data->args, int));
 }
 
 /*
@@ -193,6 +215,7 @@ int     ft_printf(const char * restrict format, ...)
 
 	data = (t_data*)malloc(sizeof(t_data));
 	data->format = ft_strdup(format);
+	data->ret = 0;
 	va_start(data->args, format);
 	va_copy(data->backup, data->args);
 	parser(data);
@@ -203,8 +226,8 @@ int     ft_printf(const char * restrict format, ...)
 
 int main(void)
 {
-//	ft_printf("this is a test:\n%#-+'0*.1sk\n", 5, "3");
-//	ft_printf("\n%3$*s\n", "1", "2", 3, "4", "5", "6");
-	printf("%Lhi", 10000000);
+//	ft_printf("this is a test:\n%#-+'0*.1lsk\n", 5, "3");
+//	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
+	printf("%lli", 100);
     return (0);
 }
