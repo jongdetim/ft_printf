@@ -16,11 +16,9 @@ char	*ft_strrchr(const char *s, int c)
 {
 	char	x;
 	char	*ptr;
-	int		occurs;
 
 	ptr = NULL;
 	x = c;
-	occurs = 0;
 	if (c != 0)
 	{
 		while (*s != '\0')

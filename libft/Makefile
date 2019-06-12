@@ -21,7 +21,6 @@ strlen strmap strmapi strncat strncmp strncpy strnequ strnew strnstr strrchr \
 strsplit strstr strsub strtrim tolower toupper putendl_fd striteri get_next_line
 CFILE = $(SOURCES:%=ft_%.c)
 OUT = $(SOURCES:%=ft_%.o)
-INCLUDES = ./libft.h
 NAME = libft.a
 
 all: $(NAME)
@@ -32,7 +31,7 @@ $(NAME): $(OUT)
 	@echo "Library succesfully created"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) $< -o $@ -I $(INCLUDES)
+	@$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	@rm -f $(OUT)
