@@ -1,31 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   ft_printf.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2019/06/13 17:11:02 by tide-jon       #+#    #+#                */
+/*   Updated: 2019/06/13 22:49:59 by tide-jon      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+
+/*
+**	remove include
+*/
+
 #include <stdio.h>
 
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include "libft/libft.h"
-
-typedef struct 	s_data
+void		dispatcher(t_printf *data)
 {
-	va_list	args;
-	va_list	backup;
-	int		precision;
-	int		width;
-	char	*format;
-	char	type;
-	int		ret;
-	int		zero;
-	int		dot;
-	int		space;
-	int		hash;
-	int		minus;
-	int		plus;
-	int		seperator;
-	char	length;
-}				t_data;
+	int		i;
+	char	*str;
 
+	str = "cspdiouxXf%";
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == data->type)
+		{
+			data->arr[i](data);
+			break ;
+		}
+		i++;
+	}
+}
 
-void	*init_data(t_data *data)
+void		build_dispatcher(t_printf *data)
+{
+	data->arr[0] = conv_c;
+	data->arr[1] = conv_s;
+	data->arr[2] = conv_p;/*
+	data->arr[3] = conv_d;
+	data->arr[4] = conv_d;
+	data->arr[5] = conv_o;
+	data->arr[6] = conv_u;
+	data->arr[7] = conv_x;
+	data->arr[8] = conv_bigx;
+	data->arr[9] = conv_f;
+	data->arr[10] = conv_prcnt; */
+}
+
+void		init_data(t_printf *data)
 {
 	data->precision = 0;
 	data->width = 0;
@@ -40,7 +66,7 @@ void	*init_data(t_data *data)
 	data->length = '0';
 }
 
-void	set_argnum(t_data *data, int d)
+void	set_argnum(t_printf *data, int d)
 {
 	int i;
 
@@ -53,9 +79,11 @@ void	set_argnum(t_data *data, int d)
 	}
 }
 
-// saves the found integer as width, argnum$ or .precision
+/*
+**	saves the found integer as width, argnum$ or .precision
+*/
 
-void	save_int(t_data *data, int d)
+void		save_int(t_printf *data, int d)
 {
 	if (*(data->format) == '$')
 	{
@@ -69,14 +97,16 @@ void	save_int(t_data *data, int d)
 	data->format--;
 }
 
-// processes integers after % and deal with '0' flag.
+/*
+**	processes integers after % and deal with '0' flag.
+*/
 
-void    process_int(t_data *data)
+void		process_int(t_printf *data)
 {
-	int i;
-	int j;
-	int d;
-	char *s;
+	int		i;
+	int		j;
+	int		d;
+	char	*s;
 
 	i = 0;
 	j = 0;
@@ -100,7 +130,7 @@ void    process_int(t_data *data)
 **	if the current character is a conversion type it is saved in data->type
 */
 
-int		get_conv(t_data *data)
+int		get_conv(t_printf *data)
 {
 	if (data->type == '0')
 	{
@@ -121,7 +151,7 @@ int		get_conv(t_data *data)
 **	'b' = long long; 'c' = character
 */
 
-void	get_length(t_data *data)
+void	get_length(t_printf *data)
 {
 	if (ft_strchr("lhL", *(data->format)) != NULL)
 	{
@@ -136,7 +166,7 @@ void	get_length(t_data *data)
 	}
 }
 
-void	parse_arg(t_data *data)
+void	parse_arg(t_printf *data)
 {
 	data->format++;
 	while (*(data->format) != '\0' && get_conv(data) == 0)
@@ -162,33 +192,33 @@ void	parse_arg(t_data *data)
 		get_length(data);
 		data->format++;
 	}
-//	process_arg(t_data *data);
+	dispatcher(data);
 }
 
-void	parser(t_data *data)
+void	parser(t_printf *data)
 {
 	while (*(data->format))
-    {
-        if (*(data->format) == '%')
-        {
+	{
+		if (*(data->format) == '%')
+		{
 			init_data(data);
 			parse_arg(data);
-        }
-        else
+		}
+		else
 		{
 			write(1, (data->format), 1);
 			data->ret++;
 		}
-        if (*(data->format))
+		if (*(data->format))
 			data->format++;
-    }
+	}
 }
 
 /*
 **	test function to check for successful parsing of flags etc.
 */
 
-void	parsing_test(t_data *data)
+void	parsing_test(t_printf *data)
 {
 	printf("precision is       %i\n", data->precision);
 	printf("width is           %i\n", data->width);
@@ -202,32 +232,34 @@ void	parsing_test(t_data *data)
 	printf("minus flag is      %i\n", data->minus);
 	printf("plus flag is       %i\n", data->plus);
 	printf("seperator flag is  %i\n", data->seperator);
-	printf("next argument is   %s\n", va_arg(data->args, int));
+	printf("next argument is   %i\n", va_arg(data->args, int));
 }
 
 /*
 **	main function
 */
 
-int     ft_printf(const char * restrict format, ...)
+int			ft_printf(const char *restrict format, ...)
 {
-	t_data	*data;
+	t_printf	*data;
 
-	data = (t_data*)malloc(sizeof(t_data));
+	data = (t_printf*)malloc(sizeof(t_printf));
 	data->format = ft_strdup(format);
 	data->ret = 0;
+	build_dispatcher(data);
 	va_start(data->args, format);
 	va_copy(data->backup, data->args);
 	parser(data);
-	parsing_test(data);
+//	parsing_test(data);
 	va_end(data->args);
-    return (0);
+	return (0);
 }
 
-int main(void)
+int			main(void)
 {
-//	ft_printf("this is a test:\n%#-+'0*.1lsk\n", 5, "3");
+	ft_printf("this is a test:\n%*.3p\n%1c\n", 4, "255", 'a');
+	printf("this is a test:\n%*p\n%c\n", 4, "255", 'a');
 //	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
-	printf("%lli", 100);
-    return (0);
+//	printf("%-10c", 'a');
+	return (0);
 }
