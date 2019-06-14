@@ -13,7 +13,7 @@
 #			DIT MAAKT NU EEN EXECUTABLE 'TEST' - VERANDEREN NAAR LIBRARY MAKEN MET RC EN RANLIB!
 NAME =		test
 
-SRCS = 		ft_printf.c conv1.c conv2.c conv3.c
+SRCS = 		ft_printf.c conv_csp.c conv_di.c conv3.c
 
 OBJECTS =	$(SRCS:.c=.o)
 

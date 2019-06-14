@@ -41,8 +41,8 @@ void		build_dispatcher(t_printf *data)
 	data->arr[0] = conv_c;
 	data->arr[1] = conv_s;
 	data->arr[2] = conv_p;
-	data->arr[3] = conv_d;/*
-	data->arr[4] = conv_d;
+	data->arr[3] = conv_d;
+	data->arr[4] = conv_d;/*
 	data->arr[5] = conv_o;
 	data->arr[6] = conv_u;
 	data->arr[7] = conv_x;
@@ -53,7 +53,7 @@ void		build_dispatcher(t_printf *data)
 
 void		init_data(t_printf *data)
 {
-	data->precision = 0;
+	data->precision = -1;
 	data->width = 0;
 	data->type = '0';
 	data->zero = 0;
@@ -257,8 +257,10 @@ int			ft_printf(const char *restrict format, ...)
 
 int			main(void)
 {
-	ft_printf("this is a test:\n%*.3p\n%1c\n", 4, "255", 'a');
-	printf("this is a test:\n%*p\n%c\n", 4, "255", 'a');
+//	ft_printf("this is a test:\n%ld\n%lld\n%d\n%hd\n", 2000000000, 4000000000, 40000000, 4000);
+//	printf("this is a test:\n%+0d\n%+20d\n%d\n%-hd\n", 2000000000, -400000000, 40000000, 400);
+	printf("%015i\n", -05);
+	ft_printf("%015i\n", -05);
 //	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
 //	printf("%-10c", 'a');
 	return (0);

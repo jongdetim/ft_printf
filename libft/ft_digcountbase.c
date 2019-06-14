@@ -1,6 +1,8 @@
 #include "libft.h"
 
-int		ft_digcountbase(unsigned long n, int base)
+#include <stdio.h>
+
+int		ft_digcountbase(long long n, int base)
 {
 	int	count;
 

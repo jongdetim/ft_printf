@@ -33,7 +33,7 @@ typedef struct	s_gnl_list
     struct s_gnl_list	*next;
 }				t_gnl_list;
 
-int					ft_digcountbase(unsigned long n, int base);
+int					ft_digcountbase(long long n, int base);
 char				*ft_itoabase(unsigned long n, int base);
 int                 get_next_line(const int fd, char **line);
 int					ft_atoi(const char *str);

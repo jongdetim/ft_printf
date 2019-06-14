@@ -56,16 +56,23 @@ void	conv_p(t_printf *data)
 	unsigned long	addr;
 	char			*str;
 	char			*temp;
+	int				i;
 
+	i = 0;
 	addr = va_arg(data->args, unsigned long);
 	temp = ft_itoabase(addr, 16);
 	str = ft_strjoin("0x", temp);
 	free(temp);
+	while (data->width > i + ft_strlen(str) && data->minus == 0)
+	{
+		write(1, " ", 1);
+		i++;
+	}
 	ft_putstr(str);
+	while (data->width > i + ft_strlen(str) && data->minus == 1)
+	{
+		write(1, " ", 1);
+		i++;
+	}
 	free(str);
-}
-
-void	conv_d(t_printf *data)
-{
-	
 }
