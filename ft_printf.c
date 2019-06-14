@@ -40,8 +40,8 @@ void		build_dispatcher(t_printf *data)
 {
 	data->arr[0] = conv_c;
 	data->arr[1] = conv_s;
-	data->arr[2] = conv_p;/*
-	data->arr[3] = conv_d;
+	data->arr[2] = conv_p;
+	data->arr[3] = conv_d;/*
 	data->arr[4] = conv_d;
 	data->arr[5] = conv_o;
 	data->arr[6] = conv_u;

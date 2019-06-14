@@ -51,61 +51,6 @@ void	conv_s(t_printf *data)
 	free(str);
 }
 
-static int		ft_transferbase(unsigned long n, int i, int base)
-{
-	int	j;
-
-	j = 0;
-	while (j < i)
-	{
-		n = (n / base);
-		j++;
-	}
-	while (j >= 0)
-	{
-		n = n % base;
-		j--;
-	}
-	return (n);
-}
-
-static int		ft_digcountbase(unsigned long n, int base)
-{
-	int	count;
-
-	count = 0;
-	if (n == 0)
-		count = 1;
-	while (n != 0)
-	{
-		n = n / base;
-		count++;
-	}
-	return (count);
-}
-
-static char			*ft_itoabase(unsigned long n, int base)
-{
-	int		digcount;
-	char	*str;
-	int		i;
-	int		temp;
-
-	i = 0;
-	digcount = ft_digcountbase(n, base);
-	str = (char*)malloc(sizeof(char) * (digcount + 1));
-	if (!str)
-		return (NULL);
-	while (i < (digcount))
-	{
-		temp = ft_transferbase(n, digcount - (i) - 1, base);
-		str[i] = temp <= 9 ? temp + '0' : temp - 10 + 'a';
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
 void	conv_p(t_printf *data)
 {
 	unsigned long	addr;
@@ -118,4 +63,9 @@ void	conv_p(t_printf *data)
 	free(temp);
 	ft_putstr(str);
 	free(str);
+}
+
+void	conv_d(t_printf *data)
+{
+	
 }
