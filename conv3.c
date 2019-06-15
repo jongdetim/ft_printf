@@ -6,20 +6,26 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:13 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/13 20:19:18 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/15 15:44:20 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_printf.h"
 
-long long	typecast(t_printf *data, long long d)
+void			ft_putllnbr(long long n)
 {
-	if (data->length == 'l')
-		d = (long)d;
-	if (data->length == '0')
-		d = (int)d;
-	if (data->length == 'c')
-		d = (char)d;
-	if (data->length == 'h')
-		d = (short)d;
-	return (d);
+	long long	res;
+	long long	m;
+
+	m = n;
+	if (m < 0)
+	{
+		m = m * -1;
+		write(1, "-", 1);
+	}
+	res = m % 10 + '0';
+	if ((m / 10) != 0)
+		ft_putllnbr(m / 10);
+	write(1, &res, 1);
 }
+

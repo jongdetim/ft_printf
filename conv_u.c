@@ -1,57 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   conv_di.c                                          :+:    :+:            */
+/*   conv_u.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/13 20:19:14 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/15 20:18:31 by tide-jon      ########   odam.nl         */
+/*   Created: 2019/06/15 15:32:34 by tide-jon       #+#    #+#                */
+/*   Updated: 2019/06/15 20:19:26 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#include <stdio.h>
-
-static long long	typecast_di(t_printf *data, long long d)
+static unsigned long long	typecast_u(t_printf *data, unsigned long long d)
 {
 	if (data->length == 'l')
-		d = (long)d;
+		d = (unsigned long)d;
 	if (data->length == '0')
-		d = (int)d;
+		d = (unsigned int)d;
 	if (data->length == 'c')
-		d = (char)d;
+		d = (unsigned char)d;
 	if (data->length == 'h')
-		d = (short)d;
+		d = (unsigned short)d;
 	return (d);
 }
 
-/*
-**	somehow also works for the the lowest possible value of each length type...
-*/
-
-static void			space_d(t_printf *data, short min)
-{
-	if (data->space == 1 && data->plus == 0 && min == 0)
-	{
-		write(1, " ", 1);
-		data->ret++;
-	}
-}
-
-static void			flaghandler2_d(t_printf *data, short extra,
-											short len, short min)
+static	void				flaghandler2_u(t_printf *data, short extra,
+																short len)
 {
 	short	i;
 
 	i = 0;
-	space_d(data, min);
-	if (min == 1)
-	{
-		write(1, "-", 1);
-		data->ret++;
-	}
 	while (i < extra)
 	{
 		write(1, "0", 1);
@@ -59,7 +38,7 @@ static void			flaghandler2_d(t_printf *data, short extra,
 		data->ret++;
 	}
 	i = 0;
-	while (data->width > i + len + extra + min && data->zero == 1 &&
+	while (data->width > i + len + extra && data->zero == 1 &&
 									data->minus == 0 && data->dot == 0)
 	{
 		write(1, "0", 1);
@@ -68,7 +47,7 @@ static void			flaghandler2_d(t_printf *data, short extra,
 	}
 }
 
-static short		flaghandler_d(t_printf *data, short min, int len)
+static short				flaghandler_u(t_printf *data, int len)
 {
 	short		extra;
 	short		i;
@@ -77,41 +56,29 @@ static short		flaghandler_d(t_printf *data, short min, int len)
 	extra = 0;
 	if (data->precision > len)
 		extra = data->precision - len;
-	while (data->width > i + len + extra + min && data->minus == 0 &&
+	while (data->width > i + len + extra && data->minus == 0 &&
 									(data->zero == 0 || data->dot == 1))
 	{
 		write(1, " ", 1);
 		i++;
 		data->ret++;
 	}
-	if (data->plus == 1 && min == 0)
-	{
-		write(1, "+", 1);
-		data->ret++;
-	}
-	flaghandler2_d(data, extra, len, min);
+	flaghandler2_u(data, extra, len);
 	return (extra);
 }
 
-void				conv_d(t_printf *data)
+void						conv_u(t_printf *data)
 {
-	long long	d;
-	short		min;
-	int			len;
-	short		i;
-	short		extra;
+	unsigned long long	d;
+	int					len;
+	short				i;
+	short				extra;
 
-	min = 0;
 	i = 0;
-	d = va_arg(data->args, long long);
-	d = typecast_di(data, d);
-	if (d < 0)
-	{
-		min = 1;
-		d *= -1;
-	}
+	d = va_arg(data->args, unsigned long long);
+	d = typecast_u(data, d);
 	len = ft_digcountbase(d, 10);
-	extra = flaghandler_d(data, min, len);
+	extra = flaghandler_u(data, len);
 	if (data->precision == 0 && data->dot == 1 && d == 0)
 	{
 		if (data->width != 0)
@@ -122,7 +89,7 @@ void				conv_d(t_printf *data)
 	else
 		ft_putllnbr(d);
 	data->ret += len;
-	while (data->width > i + len + extra + min && data->minus == 1)
+	while (data->width > i + len + extra && data->minus == 1)
 	{
 		write(1, " ", 1);
 		i++;

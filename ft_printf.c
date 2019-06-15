@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 17:11:02 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/13 22:49:59 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/15 20:30:51 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void		build_dispatcher(t_printf *data)
 	data->arr[1] = conv_s;
 	data->arr[2] = conv_p;
 	data->arr[3] = conv_d;
-	data->arr[4] = conv_d;/*
+	data->arr[4] = conv_d;
 	data->arr[5] = conv_o;
-	data->arr[6] = conv_u;
+	data->arr[6] = conv_u;/*
 	data->arr[7] = conv_x;
 	data->arr[8] = conv_bigx;
 	data->arr[9] = conv_f;
@@ -53,7 +53,7 @@ void		build_dispatcher(t_printf *data)
 
 void		init_data(t_printf *data)
 {
-	data->precision = -1;
+	data->precision = 0;
 	data->width = 0;
 	data->type = '0';
 	data->zero = 0;
@@ -250,17 +250,17 @@ int			ft_printf(const char *restrict format, ...)
 	va_start(data->args, format);
 	va_copy(data->backup, data->args);
 	parser(data);
-//	parsing_test(data);
+	parsing_test(data);
 	va_end(data->args);
-	return (0);
+	return (data->ret);
 }
 
 int			main(void)
 {
-//	ft_printf("this is a test:\n%ld\n%lld\n%d\n%hd\n", 2000000000, 4000000000, 40000000, 4000);
-//	printf("this is a test:\n%+0d\n%+20d\n%d\n%-hd\n", 2000000000, -400000000, 40000000, 400);
-	printf("%015i\n", -05);
-	ft_printf("%015i\n", -05);
+//	ft_printf("this is a test:\n%+0d\n%d\n%d\n%-hd\n", 2000000000, 40000000, 40000000, (short)1000);
+//	printf("this is a test:\n%20u\n%d\n%d\n%-hd\n", +2000000000, 40000000, 40000000, (short)1000);
+	printf("%-10.02d\n%10.u\n%p\n", -0, 0, " ");
+	ft_printf("%-10.2d\n%10.u\n%p\n", -0, 0, " ");
 //	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
 //	printf("%-10c", 'a');
 	return (0);

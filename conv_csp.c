@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   conv1.c                                            :+:    :+:            */
+/*   conv_csp.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:15 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/13 22:58:53 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/15 20:34:03 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,21 @@ void	conv_c(t_printf *data)
 	i = 1;
 	c = va_arg(data->args, int);
 	if (data->minus == 1)
+	{
 		write(1, &c, 1);
+		data->ret++;
+	}
 	while (i < data->width)
 	{
 		write(1, " ", 1);
 		i++;
+		data->ret++;
 	}
 	if (data->minus == 0)
+	{
 		write(1, &c, 1);
+		data->ret++;
+	}
 }
 
 void	conv_s(t_printf *data)
@@ -45,9 +52,11 @@ void	conv_s(t_printf *data)
 	{
 		write(1, " ", 1);
 		i++;
+		data->ret++;
 	}
 	if (data->minus == 0)
 		ft_putstr((const char*)str);
+	data->ret += ft_strlen(str);
 	free(str);
 }
 
@@ -63,16 +72,19 @@ void	conv_p(t_printf *data)
 	temp = ft_itoabase(addr, 16);
 	str = ft_strjoin("0x", temp);
 	free(temp);
-	while (data->width > i + ft_strlen(str) && data->minus == 0)
+	while (data->width > i + (int)ft_strlen(str) && data->minus == 0)
 	{
 		write(1, " ", 1);
 		i++;
+		data->ret++;
 	}
 	ft_putstr(str);
-	while (data->width > i + ft_strlen(str) && data->minus == 1)
+	data->ret += ft_strlen(str);
+	while (data->width > i + (int)ft_strlen(str) && data->minus == 1)
 	{
 		write(1, " ", 1);
 		i++;
+		data->ret++;
 	}
 	free(str);
 }
