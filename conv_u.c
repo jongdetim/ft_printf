@@ -6,13 +6,13 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/15 15:32:34 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/15 20:19:26 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/17 16:40:39 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static unsigned long long	typecast_u(t_printf *data, unsigned long long d)
+unsigned long long	typecast_u(t_printf *data, unsigned long long d)
 {
 	if (data->length == 'l')
 		d = (unsigned long)d;
@@ -25,8 +25,7 @@ static unsigned long long	typecast_u(t_printf *data, unsigned long long d)
 	return (d);
 }
 
-static	void				flaghandler2_u(t_printf *data, short extra,
-																short len)
+static	void		flaghandler2_u(t_printf *data, short extra, short len)
 {
 	short	i;
 
@@ -47,7 +46,7 @@ static	void				flaghandler2_u(t_printf *data, short extra,
 	}
 }
 
-static short				flaghandler_u(t_printf *data, int len)
+static short		flaghandler_u(t_printf *data, int len)
 {
 	short		extra;
 	short		i;
@@ -67,7 +66,7 @@ static short				flaghandler_u(t_printf *data, int len)
 	return (extra);
 }
 
-void						conv_u(t_printf *data)
+void				conv_u(t_printf *data)
 {
 	unsigned long long	d;
 	int					len;
@@ -75,8 +74,7 @@ void						conv_u(t_printf *data)
 	short				extra;
 
 	i = 0;
-	d = va_arg(data->args, unsigned long long);
-	d = typecast_u(data, d);
+	d = typecast_u(data, va_arg(data->args, unsigned long long));
 	len = ft_digcountbase(d, 10);
 	extra = flaghandler_u(data, len);
 	if (data->precision == 0 && data->dot == 1 && d == 0)

@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:14 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/15 20:18:31 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/17 18:06:45 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,12 @@ static long long	typecast_di(t_printf *data, long long d)
 **	somehow also works for the the lowest possible value of each length type...
 */
 
-static void			space_d(t_printf *data, short min)
-{
-	if (data->space == 1 && data->plus == 0 && min == 0)
-	{
-		write(1, " ", 1);
-		data->ret++;
-	}
-}
-
 static void			flaghandler2_d(t_printf *data, short extra,
 											short len, short min)
 {
 	short	i;
 
 	i = 0;
-	space_d(data, min);
 	if (min == 1)
 	{
 		write(1, "-", 1);
@@ -89,29 +79,17 @@ static short		flaghandler_d(t_printf *data, short min, int len)
 		write(1, "+", 1);
 		data->ret++;
 	}
-	flaghandler2_d(data, extra, len, min);
 	return (extra);
 }
 
-void				conv_d(t_printf *data)
+static void			flaghandler3_d(t_printf *data, short min,
+									short extra, long long d)
 {
-	long long	d;
-	short		min;
-	int			len;
-	short		i;
-	short		extra;
+	int		i;
+	int		len;
 
-	min = 0;
 	i = 0;
-	d = va_arg(data->args, long long);
-	d = typecast_di(data, d);
-	if (d < 0)
-	{
-		min = 1;
-		d *= -1;
-	}
 	len = ft_digcountbase(d, 10);
-	extra = flaghandler_d(data, min, len);
 	if (data->precision == 0 && data->dot == 1 && d == 0)
 	{
 		if (data->width != 0)
@@ -128,4 +106,30 @@ void				conv_d(t_printf *data)
 		i++;
 		data->ret++;
 	}
+}
+
+void				conv_d(t_printf *data)
+{
+	long long	d;
+	short		min;
+	int			len;
+	short		extra;
+
+	min = 0;
+	d = va_arg(data->args, long long);
+	d = typecast_di(data, d);
+	if (d < 0)
+	{
+		min = 1;
+		d *= -1;
+	}
+	len = ft_digcountbase(d, 10);
+	extra = flaghandler_d(data, min, len);
+	if (data->space == 1 && data->plus == 0 && min == 0)
+	{
+		write(1, " ", 1);
+		data->ret++;
+	}
+	flaghandler2_d(data, extra, len, min);
+	flaghandler3_d(data, min, extra, d);
 }

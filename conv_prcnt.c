@@ -1,44 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   conv3.c                                            :+:    :+:            */
+/*   conv_prcnt.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/13 20:19:13 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 17:56:46 by tide-jon      ########   odam.nl         */
+/*   Created: 2019/06/17 18:15:12 by tide-jon       #+#    #+#                */
+/*   Updated: 2019/06/17 18:48:37 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			ft_putllnbr(long long n)
+static void	prcnt_helper(t_printf *data, char c)
 {
-	long long	res;
-	long long	m;
+	int i;
 
-	m = n;
-	if (m < 0)
+	i = 1;
+	while (i < data->width)
 	{
-		m = m * -1;
-		write(1, "-", 1);
+		write(1, &c, 1);
+		i++;
+		data->ret++;
 	}
-	res = m % 10 + '0';
-	if ((m / 10) != 0)
-		ft_putllnbr(m / 10);
-	write(1, &res, 1);
 }
 
-char			*ft_strtoupper(char *str)
+void		conv_prcnt(t_printf *data)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < ft_strlen(str))
-	{
-		if ('a' <= str[i] && str[i] <= 'z')
-			str[i] = str[i] - 32;
-		i++;
-	}
-	return (str);
+	if (data->zero == 1 && data->minus == 0)
+		prcnt_helper(data, '0');
+	else if (data->minus == 0)
+		prcnt_helper(data, ' ');
+	write(1, "%", 1);
+	if (data->minus == 1)
+		prcnt_helper(data, ' ');
+	data->ret++;
 }

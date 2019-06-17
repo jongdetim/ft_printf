@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 17:11:02 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/15 20:30:51 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/17 18:52:17 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void		build_dispatcher(t_printf *data)
 	data->arr[3] = conv_d;
 	data->arr[4] = conv_d;
 	data->arr[5] = conv_o;
-	data->arr[6] = conv_u;/*
+	data->arr[6] = conv_u;
 	data->arr[7] = conv_x;
-	data->arr[8] = conv_bigx;
-	data->arr[9] = conv_f;
-	data->arr[10] = conv_prcnt; */
+	data->arr[8] = conv_x;/*
+	data->arr[9] = conv_f;*/
+	data->arr[10] = conv_prcnt;
 }
 
 void		init_data(t_printf *data)
@@ -257,11 +257,11 @@ int			ft_printf(const char *restrict format, ...)
 
 int			main(void)
 {
-//	ft_printf("this is a test:\n%+0d\n%d\n%d\n%-hd\n", 2000000000, 40000000, 40000000, (short)1000);
+//	ft_printf("this is a test:\n%20u\n%d\n%d\n%-hd\n", 2000000000, 40000000, 40000000, (short)1000);
 //	printf("this is a test:\n%20u\n%d\n%d\n%-hd\n", +2000000000, 40000000, 40000000, (short)1000);
-	printf("%-10.02d\n%10.u\n%p\n", -0, 0, " ");
-	ft_printf("%-10.2d\n%10.u\n%p\n", -0, 0, " ");
+	printf("regprintf: %07.5d\n%-.u\n%#20.4X\n%-.4%\n", 1000, 0, 0xFF);
+	ft_printf("my printf: %07.5d\n%-.u\n%#20.4X\n%-.4%\n", 1000, 0, 0xFF);
 //	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
-//	printf("%-10c", 'a');
+//	printf("%-010%\n");
 	return (0);
 }

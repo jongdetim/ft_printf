@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   conv_o.c                                           :+:    :+:            */
+/*   conv_x.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/06/15 16:29:20 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 18:15:49 by tide-jon      ########   odam.nl         */
+/*   Created: 2019/06/17 16:39:03 by tide-jon       #+#    #+#                */
+/*   Updated: 2019/06/17 17:56:03 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static	void	flaghandler_o_zero(t_printf *data, short extra,
+static	void	flaghandler_x_zero(t_printf *data, short extra,
 										short len, short hash)
 {
 	short i;
 
 	i = 0;
-	while (i < extra - hash)
+	if (hash == 2)
+	{
+		if (data->type == 'x')
+			write(1, "0x", 2);
+		else
+			write(1, "0X", 2);
+		data->ret += 2;
+	}
+	while (i < extra)
 	{
 		write(1, "0", 1);
 		i++;
@@ -32,14 +40,9 @@ static	void	flaghandler_o_zero(t_printf *data, short extra,
 		i++;
 		data->ret++;
 	}
-	if (hash == 1)
-	{
-		write(1, "0", 1);
-		data->ret++;
-	}
 }
 
-static void		minus_o(int len, short extra, short hash, t_printf *data)
+void			minus_x(int len, short extra, short hash, t_printf *data)
 {
 	int i;
 
@@ -58,7 +61,7 @@ static void		minus_o(int len, short extra, short hash, t_printf *data)
 	}
 }
 
-static void		flaghandler_o_space(t_printf *data, int len,
+void			flaghandler_x_space(t_printf *data, int len,
 							short hash, short extra)
 {
 	int	i;
@@ -79,8 +82,8 @@ static void		flaghandler_o_space(t_printf *data, int len,
 	}
 }
 
-static void		flaghandler_o(t_printf *data, int len, short hash,
-												unsigned long long d)
+void			flaghandler_x(t_printf *data, int len, short hash,
+														unsigned long long d)
 {
 	short		extra;
 	short		i;
@@ -89,25 +92,25 @@ static void		flaghandler_o(t_printf *data, int len, short hash,
 	extra = 0;
 	if (data->precision > len)
 		extra = data->precision - len;
-	flaghandler_o_space(data, len, hash, extra);
-	flaghandler_o_zero(data, extra, len, hash);
+	flaghandler_x_space(data, len, hash, extra);
+	flaghandler_x_zero(data, extra, len, hash);
 	if (data->precision == 0 && data->dot == 1 && d == 0)
 	{
-		if (data->width != 0 && data->hash == 0)
+		if (data->width != 0)
 			write(1, " ", 1);
-		else if (data->hash == 0)
-			data->ret--;
 		else
-			write(1, "0", 1);
+			data->ret--;
 	}
+	else if (data->type == 'x')
+		ft_putstr(ft_itoabase(d, 16));
 	else
-		ft_putstr(ft_itoabase(d, 8));
+		ft_putstr(ft_strtoupper(ft_itoabase(d, 16)));
 	data->ret += len;
 	if (data->minus == 1)
-		minus_o(len, extra, hash, data);
+		minus_x(len, extra, hash, data);
 }
 
-void			conv_o(t_printf *data)
+void			conv_x(t_printf *data)
 {
 	unsigned long long	d;
 	int					len;
@@ -119,7 +122,7 @@ void			conv_o(t_printf *data)
 	d = va_arg(data->args, unsigned long long);
 	d = typecast_u(data, d);
 	if (data->hash == 1 && d != 0)
-		hash = 1;
-	len = ft_digcountbase(d, 8);
-	flaghandler_o(data, len, hash, d);
+		hash = 2;
+	len = ft_digcountbase(d, 16);
+	flaghandler_x(data, len, hash, d);
 }
