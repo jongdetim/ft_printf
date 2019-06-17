@@ -6,11 +6,13 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:13 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 17:56:46 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/17 21:26:35 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+#include <stdio.h>
 
 void			ft_putllnbr(long long n)
 {
@@ -40,5 +42,19 @@ char			*ft_strtoupper(char *str)
 			str[i] = str[i] - 32;
 		i++;
 	}
+	return (str);
+}
+
+char			*ft_ftoa(long double f, int afterpoint)
+{
+	char		*str;
+	long		before;
+	long double	after;
+
+	before = (long)f;
+	after = f - before;
+	str = ft_memalloc(1);
+	printf("\0hello");
+	(void)afterpoint;
 	return (str);
 }
