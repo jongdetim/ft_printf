@@ -6,11 +6,11 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/28 17:29:51 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/03/29 17:26:50 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/18 12:10:18 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_digcount(int n)
+int		ft_digcount(long long n)
 {
 	int	count;
 

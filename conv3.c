@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:13 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 21:26:35 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/18 12:39:15 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,45 @@ char			*ft_strtoupper(char *str)
 	return (str);
 }
 
+char			*getafter(long double after, int afterpoint)
+{
+	int 	i;
+	char	*str;
+
+	i = 0;
+	while (i < afterpoint + 1)
+	{
+		after *= 10;
+		i++;
+	}
+	str = ft_itoa((long long)after);
+	i = afterpoint - 1;
+	if (str[afterpoint] >= 5)
+	{
+		if (str[i] < '9')
+			str[i]++;
+		else
+			str[i] = '0';
+		while (str[i] == '0')
+		{
+			i--;
+			if (str[i] < '9')
+				str[i]++;
+			else
+				str[i] = '0';
+		}
+	}
+}
+
 char			*ft_ftoa(long double f, int afterpoint)
 {
 	char		*str;
-	long		before;
+	long double	before;
 	long double	after;
 
-	before = (long)f;
+	before = (long long)f;
 	after = f - before;
-	str = ft_memalloc(1);
-	printf("\0hello");
+	str = getafter(after, afterpoint)
 	(void)afterpoint;
 	return (str);
 }

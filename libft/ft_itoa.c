@@ -6,13 +6,13 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/28 14:54:04 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/03/29 17:28:46 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/18 12:11:24 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_transfer(int n, int i)
+static int		ft_transfer(long long n, int i)
 {
 	int	j;
 
@@ -32,7 +32,7 @@ static int		ft_transfer(int n, int i)
 	return (n);
 }
 
-char			*ft_itoa(int n)
+char			*ft_itoa(long long n)
 {
 	int		digcount;
 	int		sign;
