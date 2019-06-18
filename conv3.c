@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:13 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/18 12:39:15 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/18 15:49:37 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char			*getafter(long double after, int afterpoint)
 				str[i] = '0';
 		}
 	}
+	return (str);
 }
 
 char			*ft_ftoa(long double f, int afterpoint)
@@ -83,7 +84,6 @@ char			*ft_ftoa(long double f, int afterpoint)
 
 	before = (long long)f;
 	after = f - before;
-	str = getafter(after, afterpoint)
-	(void)afterpoint;
+	str = getafter(after, afterpoint);
 	return (str);
 }

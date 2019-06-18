@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 17:11:02 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 21:26:03 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/18 15:59:08 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void		build_dispatcher(t_printf *data)
 	data->arr[5] = conv_o;
 	data->arr[6] = conv_u;
 	data->arr[7] = conv_x;
-	data->arr[8] = conv_x;/*
-	data->arr[9] = conv_f;*/
+	data->arr[8] = conv_x;
+	data->arr[9] = conv_f;
 	data->arr[10] = conv_prcnt;
 }
 
@@ -262,7 +262,7 @@ int			main(void)
 //	printf("regprintf: %#10.3f\n", -0.20);
 //	ft_printf("my printf: %07.5d\n%-.u\n%#20.4X\n%-.4%\n", 1000, 0, 0xFF);
 //	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
-	printf("%f\n", 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001.0000000000000000000000000000000000000000000000000000001);
-	ft_ftoa((long double)100000000000.002, 1);
+	printf("%f\n", 100021.0021);
+	ft_printf("%f\n", 100021.0021);
 	return (0);
 }

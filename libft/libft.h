@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/28 17:38:47 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/05/15 15:20:06 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/18 15:56:08 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ char				*ft_itoabase(unsigned long n, int base);
 int                 get_next_line(const int fd, char **line);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
-int					ft_digcount(int n);
+int					ft_digcount(long long n);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 int					ft_isascii(int c);
 int					ft_isdigit(int c);
 int					ft_isprint(int c);
 int					ft_iswhitespace(char c);
-char				*ft_itoa(int n);
+char				*ft_itoa(long long n);
 void				*ft_memalloc(size_t size);
 void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memchr(const void *s, int c, size_t n);
@@ -91,7 +91,6 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strtrim(char const *s);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
-char				*ft_itoa(int n);
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstaddend(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
