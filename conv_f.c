@@ -12,12 +12,26 @@
 
 #include "ft_printf.h"
 
+#include <stdio.h>
+
 void				conv_f(t_printf *data)
 {
 	char		*str;
 	long double	d;
 
-	d = va_arg(data->args, long double);
-	str = ft_ftoa(d, 6);
+	if (data->length == 'L')
+	{
+		d = va_arg(data->args, long double);
+//		__mingw_printf("long double %Lf", d);
+	}
+	else
+	{
+		d = va_arg(data->args, double);
+//		__mingw_printf("double %.8Lf\n", d);
+	}
+	if (data->dot)
+		str = ft_ftoa(d, data->precision);
+	else
+		str = ft_ftoa(d, 6);
 	ft_putstr(str);
 }

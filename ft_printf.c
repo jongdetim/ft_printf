@@ -250,7 +250,7 @@ int			ft_printf(const char *restrict format, ...)
 	va_start(data->args, format);
 	va_copy(data->backup, data->args);
 	parser(data);
-	parsing_test(data);
+//	parsing_test(data);
 	va_end(data->args);
 	return (data->ret);
 }
@@ -262,7 +262,7 @@ int			main(void)
 //	printf("regprintf: %#10.3f\n", -0.20);
 //	ft_printf("my printf: %07.5d\n%-.u\n%#20.4X\n%-.4%\n", 1000, 0, 0xFF);
 //	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
-	printf("%f\n", 100021.0021);
-	ft_printf("%f\n", 100021.0021);
+	__mingw_printf("orig: %.18f\n", 100021123123123123123123.99999991);
+	ft_printf("mine: %.18f\n", 100021123123123123123123.99999991);
 	return (0);
 }

@@ -86,9 +86,7 @@ void			flaghandler_x(t_printf *data, int len, short hash,
 														unsigned long long d)
 {
 	short		extra;
-	short		i;
 
-	i = 0;
 	extra = 0;
 	if (data->precision > len)
 		extra = data->precision - len;
@@ -114,10 +112,8 @@ void			conv_x(t_printf *data)
 {
 	unsigned long long	d;
 	int					len;
-	short				i;
 	short				hash;
 
-	i = 0;
 	hash = 0;
 	d = va_arg(data->args, unsigned long long);
 	d = typecast_u(data, d);
