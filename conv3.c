@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:13 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/18 15:49:37 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/20 19:50:13 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,65 +68,29 @@ short			ftoa_round(int i, char *str)
 	}
 	return (0);
 }
-/*
-int				float_digcount(long double n)
-{
-	int	count;
 
-	count = 0;
-	if (n == 0)
-		count = 1;
-	while (n <= -1 || n >= 1)
-	{
-		n = n / 10;
-		count++;
-	}
-	return (count);
-}
-
-static char		*itoa_after(long double n)
-{
-	int		digcount;
-	char	*str;
-	int		i;
-
-	digcount = float_digcount(n);
-	i = digcount - 1;
-	str = (char*)malloc(sizeof(char) * (digcount + 1));
-	if (!str)
-		return (NULL);
-	while (i >= 0)
-	{
-		str[i] = (n / (10 * i)) + '0';
-		n = n / 10;
-		i--;
-	}
-	str[digcount] = '\0';
-	return (str);
-}
-*/
 short			getafter(char **str, long double after, int afterpoint)
 {
-	int 	i;
-	char	*zeros;
-	char	*temp;
-	short	increment;
+	int 		i;
+	char		*temp;
+	char		*temp2;
+	short		increment;
+	long long	num;
 
 	i = 0;
-	zeros = ft_strnew(0);
+	*str = ft_strnew(0);
 	while (i < afterpoint + 1)
 	{
+		temp = *str;
 		after *= 10;
-		if (after < 1)
-		{
-			temp = zeros;
-			zeros = ft_strjoin("0", zeros);
-			free(temp);
-		}
+		num = (long long)after;
+		temp2 = ft_itoa(num);
+		*str = ft_strjoin(*str, temp2);
+		after -= num;
+		free(temp);
+		free(temp2);
 		i++;
 	}
-	*str = ft_strjoin(zeros, ft_itoa(after)); // <--  overflows with high enough precision!
-	free(zeros);
 	i = afterpoint - 1;
 	increment = ftoa_round(i, *str);
 	(*str)[afterpoint] = '\0';
@@ -144,7 +108,7 @@ char			*getbefore(char *str, long double before, short increment)
 		before -= increment;
 	beforestr = ft_itoa(before);
 	temp = beforestr;
-	beforestr = ft_strjoin(beforestr, "."); // <- niet bij precision van 0 !
+	beforestr = ft_strjoin(beforestr, ".");
 	free(temp);
 	temp = str;
 	str = ft_strjoin(beforestr, str);
@@ -158,11 +122,20 @@ char			*ft_ftoa(long double f, int afterpoint)
 	long double	before;
 	long double	after;
 	short		increment;
+	char		*temp;
 
 	before = (long long)f;
-	after = f - before;
+	if (f < 0)
+		after = (f - before) * -1;
+	else
+		after = f - before;
 	increment = getafter(&str, after, afterpoint);
 	str = getbefore(str, before, increment);
-
+	if ((f < 0 && before == 0) || (f == 0 && 1 / f < 0))
+	{
+		temp = str;
+		str = ft_strjoin("-", str);
+		free(temp);
+	}
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 17:11:02 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/18 15:59:08 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/20 19:53:52 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,12 +257,25 @@ int			ft_printf(const char *restrict format, ...)
 
 int			main(void)
 {
+	float f;
+	int x;
+	f = 0.0 / 0.0;
+//	 if (x != x)
+//	 	write(1, "nan", 3);
+//	float h = 123;
 //	ft_printf("this is a test:\n%20u\n%d\n%d\n%-hd\n", 2000000000, 40000000, 40000000, (short)1000);
 //	printf("this is a test:\n%20u\n%d\n%d\n%-hd\n", +2000000000, 40000000, 40000000, (short)1000);
 //	printf("regprintf: %#10.3f\n", -0.20);
 //	ft_printf("my printf: %07.5d\n%-.u\n%#20.4X\n%-.4%\n", 1000, 0, 0xFF);
 //	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
-	__mingw_printf("orig: %.18f\n", 100021123123123123123123.99999991);
-	ft_printf("mine: %.18f\n", 100021123123123123123123.99999991);
+//	printf("orig: %f\n", x);
+//	ft_printf("mine: %f\n", x);
+
+	x = printf("orig: %0.f\n", -0.0);
+	ft_printf("mine: %0.f\n", -0.0);
+	printf("orig return value is %i\n", x);
 	return (0);
+//	d conversie werkt nog niet goed met width en space flags interactie!
+//	-0.0 float werkt niet <-- bitwise checken
+//	nan werkt nog niet
 }

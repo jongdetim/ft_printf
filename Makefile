@@ -6,7 +6,7 @@
 #    By: tide-jon <tide-jon@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/06/13 19:57:51 by tide-jon       #+#    #+#                 #
-#    Updated: 2019/06/17 21:29:05 by tide-jon      ########   odam.nl          #
+#    Updated: 2019/06/20 16:48:26 by tide-jon      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ all :		$(NAME)
 
 $(NAME) :	$(OBJECTS)
 			@ cd libft && make && cd ..
-			@ gcc -Wall -Wextra -Werror $(OBJECTS) -L ./libft/ -lft -o $(NAME)
+			@ gcc $(OBJECTS) -L ./libft/ -lft -o $(NAME)
 
 %.o : %.c
-			@ gcc -c -Wall -Wextra -Werror $< -o $@ -I ./libft/
+			@ gcc -c $< -o $@ -I ./libft/
 
 clean :
 			@ cd libft && make clean && cd .. && rm -f $(OBJECTS)
