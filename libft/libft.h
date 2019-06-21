@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/28 17:38:47 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/18 15:56:08 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 21:58:22 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef struct	s_gnl_list
 }				t_gnl_list;
 
 int					ft_digcountbase(long long n, int base);
-char				*ft_itoabase(unsigned long n, int base);
+int					ft_digcountbase_u(unsigned long long n, int base);
+char				*ft_itoabase(unsigned long long n, int base);
 int                 get_next_line(const int fd, char **line);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);

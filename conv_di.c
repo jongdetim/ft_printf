@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:14 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 18:06:45 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 20:01:22 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void			flaghandler2_d(t_printf *data, short extra,
 	if (min == 1)
 	{
 		write(1, "-", 1);
+		data->width--;
 		data->ret++;
 	}
 	while (i < extra)
@@ -49,8 +50,8 @@ static void			flaghandler2_d(t_printf *data, short extra,
 		data->ret++;
 	}
 	i = 0;
-	while (data->width > i + len + extra + min && data->zero == 1 &&
-									data->minus == 0 && data->dot == 0)
+	while (data->width > i + len + extra &&
+		data->zero == 1 && data->minus == 0 && data->dot == 0)
 	{
 		write(1, "0", 1);
 		i++;
@@ -67,8 +68,8 @@ static short		flaghandler_d(t_printf *data, short min, int len)
 	extra = 0;
 	if (data->precision > len)
 		extra = data->precision - len;
-	while (data->width > i + len + extra + min && data->minus == 0 &&
-									(data->zero == 0 || data->dot == 1))
+	while (data->width > i + len + extra + min + data->plus &&
+		data->minus == 0 && (data->zero == 0 || data->dot == 1))
 	{
 		write(1, " ", 1);
 		i++;
@@ -78,11 +79,19 @@ static short		flaghandler_d(t_printf *data, short min, int len)
 	{
 		write(1, "+", 1);
 		data->ret++;
+		data->width--;
 	}
 	return (extra);
 }
 
-static void			flaghandler3_d(t_printf *data, short min,
+static void			lowestll(t_printf *data)
+{
+	write(1, "8", 1);
+	data->width--;
+	data->ret++;
+}
+
+static void			flaghandler3_d(t_printf *data,
 									short extra, long long d)
 {
 	int		i;
@@ -98,9 +107,13 @@ static void			flaghandler3_d(t_printf *data, short min,
 			data->ret--;
 	}
 	else
+	{
 		ft_putllnbr(d);
+		if (d == 922337203685477580)
+			lowestll(data);
+	}
 	data->ret += len;
-	while (data->width > i + len + extra + min && data->minus == 1)
+	while (data->width > i + len + extra && data->minus == 1)
 	{
 		write(1, " ", 1);
 		i++;
@@ -120,16 +133,19 @@ void				conv_d(t_printf *data)
 	d = typecast_di(data, d);
 	if (d < 0)
 	{
+		if (d < -9223372036854775807)
+			d /= 10;
 		min = 1;
 		d *= -1;
 	}
 	len = ft_digcountbase(d, 10);
-	extra = flaghandler_d(data, min, len);
 	if (data->space == 1 && data->plus == 0 && min == 0)
 	{
 		write(1, " ", 1);
+		data->width--;
 		data->ret++;
 	}
+	extra = flaghandler_d(data, min, len);
 	flaghandler2_d(data, extra, len, min);
-	flaghandler3_d(data, min, extra, d);
+	flaghandler3_d(data, extra, d);
 }

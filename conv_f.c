@@ -6,13 +6,13 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/17 19:56:57 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/20 20:02:38 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 16:29:01 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void				flaghandler_f_zeros(t_printf *data, int len, char *str, int zeros)
+void				flaghandler_f_zeros(t_printf *data, char *str, int zeros)
 {
 	char	*zerostr;
 	int		min;
@@ -60,7 +60,7 @@ void				flaghandler2_f(t_printf *data, int len, char *str)
 				zeros++;
 			data->width--;
 		}
-		flaghandler_f_zeros(data, len, str, zeros);
+		flaghandler_f_zeros(data, str, zeros);
 	}
 }
 

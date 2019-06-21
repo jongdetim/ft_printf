@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/15 16:29:20 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 18:15:49 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 22:00:19 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static void		minus_o(int len, short extra, short hash, t_printf *data)
 		i++;
 		data->ret++;
 	}
-	if (0 < extra - hash && data->precision < data->width &&
+/*	if (0 < extra - hash && data->precision < data->width &&
 										data->dot == 1)
 	{
 		write(1, " ", 1);
 		data->ret++;
-	}
+	}*/
 }
 
 static void		flaghandler_o_space(t_printf *data, int len,
@@ -71,12 +71,21 @@ static void		flaghandler_o_space(t_printf *data, int len,
 		i++;
 		data->ret++;
 	}
-	if (0 < extra - hash && data->minus == 0 && data->precision > len &&
+/*	if (0 < extra - hash && data->minus == 0 && data->precision > len &&
 						data->precision < data->width && data->dot == 1)
 	{
 		write(1, " ", 1);
 		data->ret++;
-	}
+	}*/
+}
+
+static void		put_o(unsigned long long d)
+{
+	char	*temp;
+
+	temp = ft_itoabase(d, 8);
+	ft_putstr(temp);
+	free(temp);
 }
 
 static void		flaghandler_o(t_printf *data, int len, short hash,
@@ -99,7 +108,7 @@ static void		flaghandler_o(t_printf *data, int len, short hash,
 			write(1, "0", 1);
 	}
 	else
-		ft_putstr(ft_itoabase(d, 8));
+		put_o(d);
 	data->ret += len;
 	if (data->minus == 1)
 		minus_o(len, extra, hash, data);

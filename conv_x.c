@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/17 16:39:03 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 17:56:03 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 21:55:11 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	void	flaghandler_x_zero(t_printf *data, short extra,
 		data->ret++;
 	}
 	i = 0;
-	while (data->width > i + len + extra - hash && data->zero == 1 &&
+	while (data->width > i + len + extra + hash && data->zero == 1 &&
 									data->minus == 0 && data->dot == 0)
 	{
 		write(1, "0", 1);
@@ -82,6 +82,18 @@ void			flaghandler_x_space(t_printf *data, int len,
 	}
 }
 
+static void		put_x(t_printf *data, unsigned long long d)
+{
+	char		*temp;
+
+	temp = ft_itoabase(d, 16);
+	if (data->type == 'x')
+		ft_putstr(temp);
+	else
+		ft_putstr(ft_strtoupper(temp));
+	free(temp);
+}
+
 void			flaghandler_x(t_printf *data, int len, short hash,
 														unsigned long long d)
 {
@@ -99,10 +111,8 @@ void			flaghandler_x(t_printf *data, int len, short hash,
 		else
 			data->ret--;
 	}
-	else if (data->type == 'x')
-		ft_putstr(ft_itoabase(d, 16));
-	else
-		ft_putstr(ft_strtoupper(ft_itoabase(d, 16)));
+	else 
+		put_x(data, d);
 	data->ret += len;
 	if (data->minus == 1)
 		minus_x(len, extra, hash, data);

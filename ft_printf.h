@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:07:36 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 20:51:31 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 20:32:18 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void				conv_x(t_printf *data);
 void				conv_f(t_printf *data);
 void				conv_prcnt(t_printf *data);
 void				ft_putllnbr(long long n);
+void				ft_putllunbr(unsigned long long n);
 unsigned long long	typecast_u(t_printf *data, unsigned long long d);
 char				*ft_strtoupper(char *str);
 char				*ft_ftoa(long double f, int afterpoint);

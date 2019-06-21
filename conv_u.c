@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/15 15:32:34 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/17 16:40:39 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 20:38:49 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void				conv_u(t_printf *data)
 
 	i = 0;
 	d = typecast_u(data, va_arg(data->args, unsigned long long));
-	len = ft_digcountbase(d, 10);
+	len = ft_digcountbase_u(d, 10);
 	extra = flaghandler_u(data, len);
 	if (data->precision == 0 && data->dot == 1 && d == 0)
 	{
@@ -85,7 +85,7 @@ void				conv_u(t_printf *data)
 			data->ret--;
 	}
 	else
-		ft_putllnbr(d);
+		ft_putllunbr(d);
 	data->ret += len;
 	while (data->width > i + len + extra && data->minus == 1)
 	{

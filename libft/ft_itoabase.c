@@ -1,6 +1,6 @@
 #include "libft.h"
 
-static	int	ft_transferbase(unsigned long n, int i, int base)
+static	int	ft_transferbase(unsigned long long n, int i, int base)
 {
 	int	j;
 
@@ -18,7 +18,7 @@ static	int	ft_transferbase(unsigned long n, int i, int base)
 	return (n);
 }
 
-char		*ft_itoabase(unsigned long n, int base)
+char		*ft_itoabase(unsigned long long n, int base)
 {
 	int		digcount;
 	char	*str;

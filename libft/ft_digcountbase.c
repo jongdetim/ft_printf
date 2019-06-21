@@ -2,6 +2,21 @@
 
 #include <stdio.h>
 
+int		ft_digcountbase_u(unsigned long long n, int base)
+{
+	int	count;
+
+	count = 0;
+	if (n == 0)
+		count = 1;
+	while (n != 0)
+	{
+		n = n / base;
+		count++;
+	}
+	return (count);
+}
+
 int		ft_digcountbase(long long n, int base)
 {
 	int	count;

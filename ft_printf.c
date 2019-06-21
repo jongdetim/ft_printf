@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 17:11:02 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/20 19:53:52 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 21:32:41 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,9 +242,12 @@ void	parsing_test(t_printf *data)
 int			ft_printf(const char *restrict format, ...)
 {
 	t_printf	*data;
+	char		*str;
+	int			ret;
 
 	data = (t_printf*)malloc(sizeof(t_printf));
 	data->format = ft_strdup(format);
+	str = data->format;
 	data->ret = 0;
 	build_dispatcher(data);
 	va_start(data->args, format);
@@ -252,30 +255,8 @@ int			ft_printf(const char *restrict format, ...)
 	parser(data);
 //	parsing_test(data);
 	va_end(data->args);
-	return (data->ret);
-}
-
-int			main(void)
-{
-	float f;
-	int x;
-	f = 0.0 / 0.0;
-//	 if (x != x)
-//	 	write(1, "nan", 3);
-//	float h = 123;
-//	ft_printf("this is a test:\n%20u\n%d\n%d\n%-hd\n", 2000000000, 40000000, 40000000, (short)1000);
-//	printf("this is a test:\n%20u\n%d\n%d\n%-hd\n", +2000000000, 40000000, 40000000, (short)1000);
-//	printf("regprintf: %#10.3f\n", -0.20);
-//	ft_printf("my printf: %07.5d\n%-.u\n%#20.4X\n%-.4%\n", 1000, 0, 0xFF);
-//	ft_printf("\n%3$*lls\n", "1", "2", 3, "4", "5", "6");
-//	printf("orig: %f\n", x);
-//	ft_printf("mine: %f\n", x);
-
-	x = printf("orig: %0.f\n", -0.0);
-	ft_printf("mine: %0.f\n", -0.0);
-	printf("orig return value is %i\n", x);
-	return (0);
-//	d conversie werkt nog niet goed met width en space flags interactie!
-//	-0.0 float werkt niet <-- bitwise checken
-//	nan werkt nog niet
+	free(str);
+	ret = data->ret;
+	free(data);
+	return (ret);
 }

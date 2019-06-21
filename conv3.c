@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:13 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/20 19:50:13 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 20:31:45 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ void			ft_putllnbr(long long n)
 		m = m * -1;
 		write(1, "-", 1);
 	}
+	res = m % 10 + '0';
+	if ((m / 10) != 0)
+		ft_putllnbr(m / 10);
+	write(1, &res, 1);
+}
+
+void			ft_putllunbr(unsigned long long n)
+{
+	unsigned long long	res;
+	unsigned long long	m;
+
+	m = n;
 	res = m % 10 + '0';
 	if ((m / 10) != 0)
 		ft_putllnbr(m / 10);
@@ -116,6 +128,18 @@ char			*getbefore(char *str, long double before, short increment)
 	return (str);
 }
 
+char			*ftoa_nan()
+{
+	char	*str;
+
+	str = (char*)malloc(sizeof(char) * 3 + 1);
+	str[0] = 'n';
+	str[1] = 'a';
+	str[2] = 'n';
+	str[3] = '\0';
+	return(str);
+}
+
 char			*ft_ftoa(long double f, int afterpoint)
 {
 	char		*str;
@@ -124,6 +148,8 @@ char			*ft_ftoa(long double f, int afterpoint)
 	short		increment;
 	char		*temp;
 
+	if (f != f)
+		return(ftoa_nan());
 	before = (long long)f;
 	if (f < 0)
 		after = (f - before) * -1;

@@ -6,7 +6,7 @@
 #    By: tide-jon <tide-jon@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/03/28 18:20:08 by tide-jon       #+#    #+#                 #
-#    Updated: 2019/04/03 15:17:22 by tide-jon      ########   odam.nl          #
+#    Updated: 2019/06/21 20:37:42 by tide-jon      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,14 +29,12 @@ all: $(NAME)
 $(NAME): $(OUT)
 	@ar rc $(NAME) $(OUT)
 	@ranlib $(NAME)
-	@echo "Library succesfully created"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	@rm -f $(OUT)
-	@echo "Clean completed"
 
 fclean: clean
 	@rm -f $(NAME)

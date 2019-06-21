@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:15 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/15 20:34:03 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/21 18:54:54 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,33 @@ void	conv_c(t_printf *data)
 	}
 }
 
+char	*conv_s_null()
+{
+	char	*str;
+
+	str = (char*)malloc(sizeof(char) * 6 + 1);
+	str[0] = '(';
+	str[1] = 'n';
+	str[2] = 'u';
+	str[3] = 'l';
+	str[4] = 'l';
+	str[5] = ')';
+	str[6] = '\0';
+	return (str);
+}
+
 void	conv_s(t_printf *data)
 {
 	int		i;
 	char	*str;
 
 	i = 0;
-	str = ft_strdup((const char*)va_arg(data->args, char*));
-	if ((int)ft_strlen(str) > data->precision)
+	str = va_arg(data->args, char*);
+	if (str == NULL)
+		str = conv_s_null();
+	else
+		str = strdup(str);
+	if ((int)ft_strlen(str) > data->precision && data->dot == 1)
 		str[data->precision] = '\0';
 	if (data->minus == 1)
 		ft_putstr((const char*)str);
