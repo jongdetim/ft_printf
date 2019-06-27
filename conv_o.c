@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/15 16:29:20 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/21 22:00:19 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/27 20:29:03 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,6 @@ static void		minus_o(int len, short extra, short hash, t_printf *data)
 		i++;
 		data->ret++;
 	}
-/*	if (0 < extra - hash && data->precision < data->width &&
-										data->dot == 1)
-	{
-		write(1, " ", 1);
-		data->ret++;
-	}*/
 }
 
 static void		flaghandler_o_space(t_printf *data, int len,
@@ -71,12 +65,6 @@ static void		flaghandler_o_space(t_printf *data, int len,
 		i++;
 		data->ret++;
 	}
-/*	if (0 < extra - hash && data->minus == 0 && data->precision > len &&
-						data->precision < data->width && data->dot == 1)
-	{
-		write(1, " ", 1);
-		data->ret++;
-	}*/
 }
 
 static void		put_o(unsigned long long d)
@@ -125,6 +113,6 @@ void			conv_o(t_printf *data)
 	d = typecast_u(data, d);
 	if (data->hash == 1 && d != 0)
 		hash = 1;
-	len = ft_digcountbase(d, 8);
+	len = ft_digcountbase_u(d, 8);
 	flaghandler_o(data, len, hash, d);
 }

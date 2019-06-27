@@ -6,11 +6,13 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/17 16:39:03 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/21 21:55:11 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/27 21:21:15 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+#include <stdio.h>
 
 static	void	flaghandler_x_zero(t_printf *data, short extra,
 										short len, short hash)
@@ -74,12 +76,6 @@ void			flaghandler_x_space(t_printf *data, int len,
 		i++;
 		data->ret++;
 	}
-	if (0 < extra - hash && data->minus == 0 && data->precision > len &&
-						data->precision < data->width && data->dot == 1)
-	{
-		write(1, " ", 1);
-		data->ret++;
-	}
 }
 
 static void		put_x(t_printf *data, unsigned long long d)
@@ -129,6 +125,6 @@ void			conv_x(t_printf *data)
 	d = typecast_u(data, d);
 	if (data->hash == 1 && d != 0)
 		hash = 2;
-	len = ft_digcountbase(d, 16);
+	len = ft_digcountbase_u(d, 16);
 	flaghandler_x(data, len, hash, d);
 }

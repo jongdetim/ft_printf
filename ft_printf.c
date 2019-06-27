@@ -6,17 +6,11 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 17:11:02 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/21 21:32:41 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/27 19:37:40 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*
-**	remove include
-*/
-
-#include <stdio.h>
 
 void		dispatcher(t_printf *data)
 {
@@ -216,24 +210,24 @@ void	parser(t_printf *data)
 
 /*
 **	test function to check for successful parsing of flags etc.
+**
+**void	parsing_test(t_printf *data)
+**{
+**	printf("precision is       %i\n", data->precision);
+**	printf("width is           %i\n", data->width);
+**	printf("conversion type is %c\n", data->type);
+**	printf("length is          %c\n", data->length);
+**	printf("return value is    %i\n", data->ret);
+**	printf("zero flag is       %i\n", data->zero);
+**	printf("dot flag is        %i\n", data->dot);
+**	printf("space flag is      %i\n", data->space);
+**	printf("hash flag is       %i\n", data->hash);
+**	printf("minus flag is      %i\n", data->minus);
+**	printf("plus flag is       %i\n", data->plus);
+**	printf("seperator flag is  %i\n", data->seperator);
+**	printf("next argument is   %i\n", va_arg(data->args, int));
+**}
 */
-
-void	parsing_test(t_printf *data)
-{
-	printf("precision is       %i\n", data->precision);
-	printf("width is           %i\n", data->width);
-	printf("conversion type is %c\n", data->type);
-	printf("length is          %c\n", data->length);
-	printf("return value is    %i\n", data->ret);
-	printf("zero flag is       %i\n", data->zero);
-	printf("dot flag is        %i\n", data->dot);
-	printf("space flag is      %i\n", data->space);
-	printf("hash flag is       %i\n", data->hash);
-	printf("minus flag is      %i\n", data->minus);
-	printf("plus flag is       %i\n", data->plus);
-	printf("seperator flag is  %i\n", data->seperator);
-	printf("next argument is   %i\n", va_arg(data->args, int));
-}
 
 /*
 **	main function

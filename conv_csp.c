@@ -6,7 +6,7 @@
 /*   By: tide-jon <tide-jon@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/06/13 20:19:15 by tide-jon       #+#    #+#                */
-/*   Updated: 2019/06/21 18:54:54 by tide-jon      ########   odam.nl         */
+/*   Updated: 2019/06/27 19:36:00 by tide-jon      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	conv_s(t_printf *data)
 	if (str == NULL)
 		str = conv_s_null();
 	else
-		str = strdup(str);
+		str = ft_strdup(str);
 	if ((int)ft_strlen(str) > data->precision && data->dot == 1)
 		str[data->precision] = '\0';
 	if (data->minus == 1)
 		ft_putstr((const char*)str);
-	while (i < data->width - (int)strlen(str))
+	while (i < data->width - (int)ft_strlen(str))
 	{
 		write(1, " ", 1);
 		i++;

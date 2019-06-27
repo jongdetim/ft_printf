@@ -26,7 +26,7 @@ char		*ft_itoabase(unsigned long long n, int base)
 	int		temp;
 
 	i = 0;
-	digcount = ft_digcountbase(n, base);
+	digcount = ft_digcountbase_u(n, base);
 	str = (char*)malloc(sizeof(char) * (digcount + 1));
 	if (!str)
 		return (NULL);
